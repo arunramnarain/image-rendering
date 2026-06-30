@@ -1,0 +1,57 @@
+import cv2
+import numpy as np
+
+image_1 = cv2.imread("images\\cat_1.png")
+image_2 = cv2.imread("images\\cat_2.jpg")
+cv2.imshow("Original images", image_1)
+cv2.imshow("Original img", image_2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+#Activity one, add the images
+
+sum = cv2.add(image_1,image_2)
+cv2.imshow("Added images", sum)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Activity two, blending the images
+
+blend = cv2.addWeighted(image_1, 0.5, image_2, 0.4, 0) 
+cv2.imshow("Added, with wight images", blend)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Activity three, subtracting images
+
+subtract = cv2.subtract(image_1, image_2)
+cv2.imshow("subtracted, 2 from 1 image", subtract)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+subtract_2 = cv2.subtract(image_2, image_1)
+cv2.imshow("subtracted, 1 from 2 image", subtract_2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Activity four, resizing
+
+image_3 = cv2.imread("images\\pikachu.png")
+cv2.imshow("pikachu original", image_3)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# order of dimension is width then height
+resized = cv2.resize(image_3, (150,200))
+cv2.imshow("pikachu resized", resized)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Activity 5 erosion of images, trim the corners
+image_4 = cv2.imread("images\\tomato_image.png")
+kernal = np.ones((5,5))
+eroded_image = cv2.erode(image_4,kernal)
+cv2.imshow("eroded tomatos", eroded_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+

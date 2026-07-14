@@ -1,0 +1,54 @@
+import cv2
+
+img = cv2.imread("images\\pikachu.png")
+img_2 = cv2.imread("images\\cat_2.jpg")
+cv2.imshow("Pikachu", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# blurred image
+
+# gaussian blur: machine learning, pre processing - to train the machine
+Gaussian = cv2.GaussianBlur(img, (3,3), 0)# the tuple is always an odd number
+cv2.imshow("Gussian Blurring", Gaussian)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# median blur: used in digital processing, preserves edge but removes noise
+Median = cv2.medianBlur(img, 5)
+cv2.imshow("Median Blur", Median)
+cv2.waitKey(0)
+
+# Bilateral Blur: preserves the sharp edge
+Bilateral = cv2.bilateralFilter(img, 7, 75,75)
+cv2.imshow("Bilateral filter", Bilateral)
+cv2.waitKey(0)
+# line 22:
+# first number - nieghbourhood diameter, used for filtering
+# second number - sigma colour, describes how much pixels with different colour can mix
+# third number - sigma space, describes how far pixels can influence each other
+
+# bordering the image
+
+border = cv2.copyMakeBorder(img_2, 10,10, 10,10,cv2.BORDER_CONSTANT, value = 1)# numbers are border size, top then bottom, then left, then right
+cv2.imshow("border image", border)
+cv2.waitKey(0)
+
+# reflective border
+
+reflective_border = cv2.copyMakeBorder(img_2, 150,10,20,20, cv2.BORDER_REFLECT, value = 1)
+cv2.imshow("reflective border image", reflective_border)
+cv2.waitKey(0)
+
+# edge cascade
+
+canny = cv2.Canny(img_2, 120, 175)
+cv2.imshow("Canny edges", canny)
+cv2.waitKey(0)
+
+#cropping an image
+
+crop = img_2[50:180, 20:170]# first number is inclusive, second is exclusive, x then y
+cv2.imshow("Crop", crop)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

@@ -1,0 +1,80 @@
+import numpy as np
+import cv2
+
+pikachu = cv2.imread("images\\pikachu.png")
+start_p = (50,100)
+end_p = (400, 350)
+color = (132, 234, 0)
+thickness = 9
+
+line_on_image = cv2.line(pikachu, start_p, end_p, color, thickness)
+cv2.imshow("line on image", line_on_image)
+
+cv2.waitKey(0)
+
+# draw a rectangle on an image
+
+pikachu = cv2.imread("images\\pikachu.png")
+s_p = (10,10)
+e_p = (250,250)
+color = (50,80,245)
+thickness = 4
+
+rectangle_on_image = cv2.rectangle(pikachu, s_p, e_p, color, thickness)
+cv2.imshow("rectangle on image", rectangle_on_image)
+cv2.waitKey(0)
+
+# filled rectangle
+
+pikachu = cv2.imread("images\\pikachu.png")
+s_p = (50, 80)
+e_p = (540, 650)
+color = (82, 290, 287)
+thickness = -1
+
+filled_rectangle_on_image = cv2.rectangle(pikachu, s_p, e_p, color, thickness)
+cv2.imshow("filled rectangle on image",filled_rectangle_on_image)
+
+cv2.waitKey(0)
+
+# circle on the image, hollow
+
+pikachu = cv2.imread("images\\pikachu.png")
+center = (89, 100)
+radius = 58
+color = (92, 211, 0)
+thickness = 4
+
+hollow_circle = cv2.circle(pikachu, center, radius, color, thickness)
+cv2.imshow("hollow circle on image",hollow_circle)
+
+cv2.waitKey(0)
+
+# circle on the image, filled
+
+pikachu = cv2.imread("images\\pikachu.png")
+center = (133, 345)
+radius = 102
+color = (243, 98, 65)
+thickness = -1
+
+hollow_circle = cv2.circle(pikachu, center, radius, color, thickness)
+cv2.imshow("hollow circle on image",hollow_circle)
+
+cv2.waitKey(0)
+
+# draw text on an image
+
+pikachu = cv2.imread("images\\pikachu.png")
+
+font = cv2.FONT_HERSHEY_SIMPLEX
+origin = (5, 400)
+fontScale = 3
+color = (234, 56, 32)
+thickness = 8
+text = cv2.putText(pikachu, "Pikachu", origin, font, 
+                   fontScale, color, thickness, cv2.LINE_AA)
+cv2.imshow("text on image", text)
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()

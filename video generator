@@ -1,0 +1,54 @@
+import cv2, os
+from PIL import Image
+path = r"C:\\Users\\arun\\OneDrive\\Desktop\\Open_CV\\image_to_video_f"
+os.chdir(path)
+
+mean_h = 0
+mean_w = 0
+num_of_imgs = len(os.listdir("."))
+
+for file in os.listdir("."):
+    image = Image.open(os.path.join(path, file))
+    w,h = image.size
+    mean_w += w
+    mean_h += h
+
+#averaging width and height
+mean_w //= num_of_imgs
+mean_h //= num_of_imgs
+
+# resizign all images to the mean width and height
+
+for file in os.listdir("."):
+    if file.endswith(".jpg") or file.endswith(".jpeg") or file.endswith(".png"):
+        image = Image.open(os.path.join(path, file))
+        w,h = image.size
+        print(w,h)
+
+        # image resized
+        imageresized = image.resize((mean_w, mean_h), Image.LANCZOS)
+        imageresized.save(file, "JPEG", quality = 95)
+        print(image.filename.split("\\")[-1], "is resized")
+
+# create a function to generate videos
+
+def video_generator():
+    video_name = "my first video"
+    os.chdir(r"C:\\Users\\arun\\OneDrive\\Desktop\\Open_CV\\image_to_video_f")
+    images = []
+    for img in os.listdir("."):
+        if img.endswith(".jpg") or img.endswith(".jpeg") or img.endswith(".png"):
+            images.append(img)
+
+    print(images)
+    frame = cv2.imread(os.path.join(".", images[0]))
+    height, width, layers = frame.shape
+    # video writer to create .avi file
+    video = cv2.VideoWriter(video_name, 0, 1, (width, height))
+    for image in images:
+        video.write(cv2.imread(os.path.join(".", image)))
+    cv2.destroyAllWindows()
+    video.release()
+    print("video generated succesfully, check your folder")
+
+video_generator()

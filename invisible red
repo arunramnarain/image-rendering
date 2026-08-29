@@ -1,0 +1,53 @@
+import cv2
+import numpy as np
+import time
+
+raw_video = cv2.VideoCapture("invisible_demovideo.mp4")
+time.sleep(1)
+count = 0
+background = 0
+
+for i in range(60): # capturing the background for the first 60 seconds
+    return_val, background = raw_video.read()
+    if return_val == False:
+        continue
+    background = np.flip(background, axis = 1)
+
+while(raw_video.isOpened()):
+    return_val, img = raw_video.read()
+    if not return_val:
+        break
+    count += 1
+
+    img = np.flip(img,axis = 1)
+    # convert colour detection from bgr - hsv, hsv is better for colour detection
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    low_red_1 = np.array([0,120, 70])
+    upper_red_1 = np.array([10, 255, 255])
+
+    low_red_2 = np.array([170, 120, 120])
+    upper_red_2 = np.array([100, 255, 255])
+
+    mask_1 = cv2.inRange(hsv, low_red_1, upper_red_1)
+    mask_2 = cv2.inRange(hsv, low_red_2, upper_red_2)
+
+    mask_1 = mask_1 + mask_2
+
+    red_mask = cv2.bitwise_or(mask_1, mask_2)
+
+    cv2.morphologyEx(mask_1, cv2.MORPH_OPEN,
+                    np.ones((3,3), np.uint8), iterations = 2)
+
+    mask_1 = cv2. dilate(mask_1, np.ones((3,3), np.uint8), iterations = 1)
+    mask_2 = cv2.bitwise_not(mask_1)
+
+    res1 = cv2.bitwise_and(background, background, mask = mask_1)
+    res2 = cv2.bitwise_and(img, img, mask = mask_2)
+    final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
+
+    cv2.imshow("invisible_man", final_output)
+
+    if cv2.waitKey(5) == ord("q"):
+        break
+
+
